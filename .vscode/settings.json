@@ -1,3 +1,4 @@
 {
-    "python.pythonPath": "b:\\Programming\\projects\\Cartoonizer\\cartoonizer\\Scripts\\python.exe"
+    "python.pythonPath": "b:\\Programming\\projects\\Cartoonizer\\cartoonizer\\Scripts\\python.exe",
+    "python.formatting.provider": "yapf"
 }
