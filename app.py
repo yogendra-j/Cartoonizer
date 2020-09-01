@@ -2,7 +2,8 @@ import os
 from flask import Flask, redirect, url_for, request, render_template
 from catoonizer import *
 
-app = Flask(__name__)
+def createapp():
+   return app = Flask(__name__)
 
 
 @app.route('/', methods=['GET'])
@@ -28,4 +29,5 @@ def upload():
 
 
 if __name__ == '__main__':
+    app = createapp()
     app.run(debug=True)
