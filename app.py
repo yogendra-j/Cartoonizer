@@ -17,12 +17,14 @@ def upload():
 
         basepath = os.path.dirname(__file__)
         file_path = os.path.join(
-            basepath, 'static/uploads', f.filename)
+            basepath, 'static', 'uploads', "xx." + f.filename.split('.')[-1])
+
         f.save(file_path)
         out = cv2.imread(file_path)
         out = makecartoon(out)
-        cv2.imwrite(file_path, out)
-        return redirect(url_for('static', filename='uploads/' + f.filename), code=301)
+        cv2.imwrite(os.path.join(
+            basepath, 'static', 'uploads', "xxx." + f.filename.split('.')[-1]), out)
+        return redirect(url_for('static', filename='uploads/' + "xxx." + f.filename.split('.')[-1]), code=301)
 
 
 if __name__ == '__main__':

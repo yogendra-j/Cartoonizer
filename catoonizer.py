@@ -11,13 +11,13 @@ def makecartoon(img):
 
     useses bilaterral blur, canny edge detection, k-means clustering
     '''
-    if max(img.shape) > 720:
-        scale = 720 / max(img.shape)
+    if max(img.shape) > 2000:
+        scale = 2000 / max(img.shape)
         img = cv2.resize(
             img, (int(img.shape[1] * scale), int(img.shape[0] * scale)))
-    kernal = np.ones((7, 7), np.uint8)
-    # img = cv2.medianBlur(img, 1)
+    kernal = np.ones((3, 3), np.uint8)
     out = blurring(img,)
+    img = cv2.medianBlur(img, 1)
     edge = edge_detection(out)
 
     out = cv2.cvtColor(img, cv2.COLOR_RGB2HSV)
@@ -38,11 +38,10 @@ def makecartoon(img):
     out = cv2.cvtColor(out, cv2.COLOR_HSV2RGB)
     draw_contours(out, edge)
     erode(out, kernal)
-
     return out
 
 
-def blurring(output, dia=1, sigma_c=200, sigma_s=200):
+def blurring(output, dia=3, sigma_c=200, sigma_s=200):
     '''takes image as inut and return blured image using bilateral filter'''
     h, w, c = output.shape
     for i in range(c):
@@ -104,8 +103,8 @@ def update_centroid(Clusters, hist):
 
 def find_K(hist):
     '''findes optimal number of clusters'''
-    alpha = 0.001
-    N = 72
+    alpha = 1
+    N = 70
     clusters = np.array([128])
 
     while True:
@@ -147,7 +146,7 @@ def draw_contours(img, edge):
 
 
 def erode(img, kernal):
-    return cv2.erode(img, kernal, iterations=3)
+    return cv2.erode(img, kernal, iterations=1)
 
 
 if __name__ == "__main__":

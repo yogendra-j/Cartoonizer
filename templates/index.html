@@ -1,6 +1,6 @@
 {% extends "base.html" %} {% block content %}
 
-<h2>Image Classifier</h2>
+<h2 class="title">Upload your Image</h2>
 
 {% if filename %}
 <div>
@@ -10,11 +10,21 @@
 <form method="post" action="/" enctype="multipart/form-data">
   <dl>
     <p>
-      <input type="file" name="file" autocomplete="off" required />
+      <input
+        type="file"
+        name="file"
+        autocomplete="off"
+        required
+        class="btn btn-outline-secondary my-2 my-sm-0"
+      />
     </p>
   </dl>
   <p>
-    <input type="submit" value="Submit" />
+    <input
+      type="submit"
+      value="Submit"
+      class="btn btn-outline-primary my-2 my-sm-0"
+    />
   </p>
 </form>
 
