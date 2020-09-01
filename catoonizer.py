@@ -11,8 +11,8 @@ def makecartoon(img):
 
     useses bilaterral blur, canny edge detection, k-means clustering
     '''
-    kernal = np.ones((1, 1), np.uint8)
-    img = cv2.medianBlur(img, 1)
+    kernal = np.ones((3, 3), np.uint8)
+    # img = cv2.medianBlur(img, 1)
     out = blurring(img,)
     edge = edge_detection(out)
 
@@ -33,12 +33,12 @@ def makecartoon(img):
     out = out.reshape((h, w, channels))
     out = cv2.cvtColor(out, cv2.COLOR_HSV2RGB)
     draw_contours(out, edge)
-    out = cv2.dilate(out, np.ones((1, 1)))
+    erode(out, kernal)
 
     return out
 
 
-def blurring(output, dia=3, sigma_c=200, sigma_s=200):
+def blurring(output, dia=1, sigma_c=200, sigma_s=200):
     '''takes image as inut and return blured image using bilateral filter'''
     h, w, c = output.shape
     for i in range(c):
@@ -139,29 +139,34 @@ def find_K(hist):
 def draw_contours(img, edge):
     countours, _ = cv2.findContours(
         edge, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_NONE)
-    cv2.drawContours(img, countours, -1, 0, thickness=2)
+    cv2.drawContours(img, countours, -1, 0, thickness=1)
+
+
+def erode(img, kernal):
+    return cv2.erode(img, kernal, iterations=3)
 
 
 if __name__ == "__main__":
-    # img = cv2.imread("IMG-20200121-WA0021.jpg")
-    # out = makecartoon(img)
-    # cv2.imshow("output", out)
-    # img = cv2.imread("20191211_004108.jpg")
-    # out = makecartoon(img)
-    # cv2.imshow("output2", out)
-    # img = cv2.imread("20200130_201459.jpg")
-    # out = makecartoon(img)
-    # cv2.imshow("output3", out)
-    # img = cv2.imread("me.jpeg")
-    # img = cv2.resize(img, (int(img.shape[1] / 4), int(img.shape[0] / 4)))
-    # out = makecartoon(img)
-    # cv2.imshow("output4", out)
-    cap = cv2.VideoCapture(0)
-    while True:
-        _, img = cap.read()
-        out = makecartoon(img)
-        cv2.imshow("output5", out)
-        if cv2.waitKey(2) & 0xFF == ord('q'):
-            break
-    cap.release()
+    img = cv2.imread("IMG-20200121-WA0021.jpg")
+    out = makecartoon(img)
+    cv2.imshow("output", out)
+    img = cv2.imread("20191211_004108.jpg")
+    out = makecartoon(img)
+    cv2.imshow("output2", out)
+    img = cv2.imread("20200130_201459.jpg")
+    out = makecartoon(img)
+    cv2.imshow("output3", out)
+    img = cv2.imread("me.jpeg")
+    img = cv2.resize(img, (int(img.shape[1] / 4), int(img.shape[0] / 4)))
+    out = makecartoon(img)
+    cv2.imshow("output4", out)
+    # cap = cv2.VideoCapture(0)
+    # while True:
+    #     _, img = cap.read()
+    #     out = makecartoon(img)
+    #     cv2.imshow("output5", out)
+    #     if cv2.waitKey(2) & 0xFF == ord('q'):
+    #         break
+    # cap.release()
+    cv2.waitKey(0)
     cv2.destroyAllWindows()
