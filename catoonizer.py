@@ -11,7 +11,11 @@ def makecartoon(img):
 
     useses bilaterral blur, canny edge detection, k-means clustering
     '''
-    kernal = np.ones((3, 3), np.uint8)
+    if max(img.shape) > 720:
+        scale = 720 / max(img.shape)
+        img = cv2.resize(
+            img, (int(img.shape[1] * scale), int(img.shape[0] * scale)))
+    kernal = np.ones((7, 7), np.uint8)
     # img = cv2.medianBlur(img, 1)
     out = blurring(img,)
     edge = edge_detection(out)
